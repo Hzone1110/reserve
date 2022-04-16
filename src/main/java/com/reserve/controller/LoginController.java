@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 public class LoginController {
     private final TokenUtil tokenUtil;
