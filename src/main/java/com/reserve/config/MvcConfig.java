@@ -25,11 +25,14 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Override
+    //配置跨域
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                // 设置允许跨域请求的域名
+                .allowedOriginPatterns("*")
+                // 是否允许证书 不再默认开启
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .maxAge(3600);
+                // 设置允许的方法
+                .allowedMethods("*");
     }
 }

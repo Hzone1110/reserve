@@ -2,11 +2,11 @@ package com.reserve.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,14 +25,14 @@ public class TokenUtil {
                 .create()
                 .withClaim("id", id)
                 .withClaim("email", email)
-                .withClaim("timeStamp", System.currentTimeMillis()+ EXPIRE)
+                .withClaim("timeStamp", System.currentTimeMillis() + EXPIRE)
                 .sign(Algorithm.HMAC256(privateKey));
     }
 
     /**
      * 解析token.
      */
-    public Map<String, String> parseToken(String token) {
+    public Map<String, String> parseToken(String token) throws JWTDecodeException {
         HashMap<String, String> map = new HashMap<>();
         DecodedJWT decodedjwt = JWT.require(Algorithm.HMAC256(privateKey))
                 .build().verify(token);
@@ -49,13 +49,6 @@ public class TokenUtil {
      * @return 获取token
      */
     public String getToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie c :
-                cookies) {
-            if (c.getName().equals("token")) {
-                return c.getValue();
-            }
-        }
-        return null;
+        return request.getHeader("Authorization");
     }
 }
