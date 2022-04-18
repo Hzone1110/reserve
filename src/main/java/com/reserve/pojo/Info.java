@@ -9,6 +9,6 @@ public class Info {
     private Integer id;
     private int position_type;
     private String date;
-    private String type;
+    private String model;
     private Integer status;
 }

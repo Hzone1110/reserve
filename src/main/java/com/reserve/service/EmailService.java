@@ -2,7 +2,6 @@ package com.reserve.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,14 +20,17 @@ public class EmailService {
     /**
      * Spring Boot 提供了一个发送邮件的简单抽象，使用的是下面这个接口，这里直接注入即可使用
      */
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     /**
      * 配置文件中我的qq邮箱
      */
     @Value("${spring.mail.username}")
     private String from;
+
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     /**
      * 简单文本邮件
@@ -68,7 +70,7 @@ public class EmailService {
             //邮件发送人
             messageHelper.setFrom(from);
             //邮件接收人
-            messageHelper.setTo(subject);
+            messageHelper.setTo(to);
             //邮件主题
             message.setSubject(subject);
             //邮件内容，html格式
