@@ -32,26 +32,28 @@ public class LoginController {
 
 
     @PostMapping("/api/adminLogin")
-    public ResponseEntity<String> adminLogin(@RequestBody Map<String, String> map) {
+    public ResponseEntity<Map<String, String>> adminLogin(@RequestBody Map<String, String> map) {
         String account = map.get("account");
         String password = map.get("password");
+        Map<String, String> m = new HashMap<>();
         Admin admin = adminMapper.queryAdminByAccount(account);
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
-                return new ResponseEntity<>("登录成功", HttpStatus.OK);
+                m.put("msg", "success");
             } else {
-                return new ResponseEntity<>("密码错误", HttpStatus.OK);
+                m.put("msg", "密码错误");
             }
         } else {
-            return new ResponseEntity<>("账号不存在", HttpStatus.OK);
+            m.put("msg", "账号不存在");
         }
+        return new ResponseEntity<>(m, HttpStatus.OK);
     }
 
     @PostMapping("/api/userLogin")
     public ResponseEntity<Map<String, String>> userLogin(@RequestBody Map<String, String> map) {
         String email = map.get("email");
         Map<String, String> m = new HashMap<>();
-        if (Pattern.matches("^20[0-9]{6}@stu\\.neu\\.edu\\.cn$", email)) {
+        if (Pattern.matches("^20\\d{6}@stu\\.neu\\.edu\\.cn$", email)) {
             User user = userMapper.queryUserByEmail(email);
             if (user == null) {
                 userMapper.addUser(email);
@@ -62,7 +64,7 @@ public class LoginController {
             emailService.sendSimpleMail(email, "登录链接", "localhost:8080/user/auth?token=" + token);
             return new ResponseEntity<>(m, HttpStatus.OK);
         }
-        m.put("msg", "wrong email");
+        m.put("msg", "邮箱错误");
         return new ResponseEntity<>(m, HttpStatus.OK);
     }
 

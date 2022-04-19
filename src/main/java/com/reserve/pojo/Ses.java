@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 @Builder
 public class Ses {
-    private Integer id;
+    private Integer sesID;
     private Date date;
     private String startTime;
     private String endTime;

@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
@@ -23,9 +25,8 @@ class ReserveApplicationTests {
 
     @Test
     void contextLoads() throws SQLException {
-        String email = "20206787@stu.neu.edu.cn";
-        List<Info> infos = infoMapper.getInfoBySes(1);
-        System.out.println(infos);
+        System.out.println(LocalDate.now());
+        System.out.println(Date.valueOf(LocalDate.now()));
     }
 
 }
