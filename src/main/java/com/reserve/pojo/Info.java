@@ -9,7 +9,7 @@ import java.sql.Date;
 @Builder
 public class Info {
     private Integer id;
-    private int position_type;
+    private int position;
     private Date date;
     private String model;
     private Integer status;

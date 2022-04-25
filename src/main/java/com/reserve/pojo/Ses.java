@@ -4,15 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Data
 @Builder
 public class Ses {
     private Integer sesID;
     private Date date;
-    private String startTime;
-    private String endTime;
-    private Integer position_type;
+    private Time startTime;
+    private Time endTime;
+    private Integer position;
     private Integer limit;
     private Integer num;
 }

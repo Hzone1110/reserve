@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +27,9 @@ public class SesController {
         Map<String, String> m = new HashMap<>();
         Ses ses = Ses.builder().build();
         ses.setDate(Date.valueOf(map.get("date")));
-        ses.setStartTime(map.get("startTime"));
-        ses.setEndTime(map.get("endTime"));
-        ses.setPosition_type(Integer.valueOf(map.get("position_type")));
+        ses.setStartTime(Time.valueOf(map.get("startTime")));
+        ses.setEndTime(Time.valueOf(map.get("endTime")));
+        ses.setPosition(Integer.valueOf(map.get("position")));
         ses.setLimit(Integer.valueOf(map.get("limit")));
         sesMapper.addSes(ses);
         m.put("msg", "success");

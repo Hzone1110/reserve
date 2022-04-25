@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.reserve.mapper.InfoMapper">
     <insert id="addInfo" parameterType="Info">
-        insert into info (position_type, date, model, status)
-        values (#{position_type}, #{date}, #{model}, #{status})
+        insert into info (position, date, model, status)
+        values (#{position}, #{date}, #{model}, #{status})
     </insert>
     <delete id="deleteInfo" parameterType="int">
         delete
@@ -16,14 +16,14 @@
         where info_id = #{rsvID}
     </delete>
     <select id="getInfoBySes" resultType="Info" parameterType="int">
-        select id, position_type, date, model, status
+        select id, position, date, model, status
         from info,
              ses_info
         where id = ses_info.info_id
           and session_id = #{rsvID}
     </select>
     <select id="getInfoByEmail" resultType="Info" parameterType="String">
-        select info.id, position_type, date, model, status
+        select info.id, position, date, model, status
         from info,
              user_info,
              user

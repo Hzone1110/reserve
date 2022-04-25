@@ -25,12 +25,12 @@ public class InfoController {
     @PostMapping("/api/rsv")
     public ResponseEntity<Map<String, String>> addInfo(@RequestBody Map<String, String> map) {
         int sesID = Integer.parseInt(map.get("sesID"));
-        int position_type = Integer.parseInt(map.get("position_type"));
+        int position = Integer.parseInt(map.get("position"));
         int userID = Integer.parseInt(map.get("userID "));
         Map<String, String> m = new HashMap<>();
         String model = map.get("model");
         Info info = Info.builder().build();
-        info.setPosition_type(position_type);
+        info.setPosition(position);
         info.setModel(model);
         info.setDate(Date.valueOf(LocalDate.now()));
         infoMapper.addInfo(info);
