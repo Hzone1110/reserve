@@ -12,13 +12,11 @@
         from session
         where id = #{id}
     </delete>
-    <update id="putSes" parameterType="Ses">
+    <update id="putSes" parameterType="int">
         update session
-        set date      = #{date},
-            startTime = #{startTime},
-            endTime   = #{endTime},
-            position  = #{position},
-            'limit'   = #{limit}
+        set num = (select COUNT(*)
+                   from ses_info
+                   where session_id = #{id})
         where id = #{id}
     </update>
     <select id="getSes" resultType="Ses" parameterType="int">

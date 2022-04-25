@@ -14,7 +14,7 @@ public interface SesMapper {
 
     int deleteSes(int id);
 
-    int putSes(Ses ses);
+    int putSes(int id);
 
     Ses getSes(int id);
 

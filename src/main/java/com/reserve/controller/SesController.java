@@ -37,9 +37,9 @@ public class SesController {
     }
 
     @DeleteMapping("/api/ses")
-    public ResponseEntity<Map<String, String>> delSes(@RequestBody Object sesID) {
+    public ResponseEntity<Map<String, String>> delSes(@RequestBody Map<String, String> map) {
         Map<String, String> m = new HashMap<>();
-        sesMapper.deleteSes((Integer) sesID);
+        sesMapper.deleteSes(Integer.parseInt(map.get("sesID")));
         m.put("msg", "success");
         return new ResponseEntity<>(m, HttpStatus.OK);
     }
@@ -47,7 +47,7 @@ public class SesController {
     @GetMapping("/api/ses")
     public ResponseEntity<List<Ses>> getSes(@RequestBody(required = false) Map<String, String> map) {
         List<Ses> sesList = new ArrayList<>();
-        if (map==null){
+        if (map == null) {
             sesList.addAll(sesMapper.getAll());
             return new ResponseEntity<>(sesList, HttpStatus.OK);
         }
