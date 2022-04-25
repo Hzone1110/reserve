@@ -36,6 +36,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         response.setContentType("application/json; charset=utf-8");
         if (token == null) {
             response.getWriter().println("{\"success\":false,\"msg\":\"没有权限，请先登录\"}");
+            response.setStatus(401);
             return false;
         }
         try {
@@ -43,10 +44,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             long timeStamp = Long.parseLong(map.get("timeStamp"));
             if (timeStamp < System.currentTimeMillis()) {
                 response.getWriter().println("{\"success\":false,\"msg\":\"用户登陆凭证已过期\"}");
+                response.setStatus(401);
                 return false;
             }
         } catch (JWTDecodeException exception) {
             response.getWriter().println("{\"success\":false,\"msg\":\"权限校验失败\"}");
+            response.setStatus(401);
             return false;
         }
         return true;
