@@ -44,10 +44,14 @@ public class SesController {
     }
 
     @GetMapping("/api/ses")
-    public ResponseEntity<List<Ses>> getSes(@RequestBody Map<String, String> map) {
+    public ResponseEntity<List<Ses>> getSes(@RequestBody(required = false) Map<String, String> map) {
+        List<Ses> sesList = new ArrayList<>();
+        if (map==null){
+            sesList.addAll(sesMapper.getAll());
+            return new ResponseEntity<>(sesList, HttpStatus.OK);
+        }
         String sesID = map.get("sesID");
         String fromTime = map.get("fromTime");
-        List<Ses> sesList = new ArrayList<>();
         if (sesID != null) {
             sesList.add(sesMapper.getSes(Integer.parseInt(sesID)));
             return new ResponseEntity<>(sesList, HttpStatus.OK);

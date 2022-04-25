@@ -1,6 +1,5 @@
 package com.reserve.config;
 
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.reserve.util.TokenUtil;
 
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         if (token == null) {
-            response.getWriter().println("{\"success\":false,\"msg\":\"没有权限，请先登录\"}");
+            response.getWriter().println("{\"msg\":\"没有权限，请先登录\"}");
             response.setStatus(401);
             return false;
         }
@@ -43,12 +42,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             Map<String, String> map = tokenUtil.parseToken(token);
             long timeStamp = Long.parseLong(map.get("timeStamp"));
             if (timeStamp < System.currentTimeMillis()) {
-                response.getWriter().println("{\"success\":false,\"msg\":\"用户登陆凭证已过期\"}");
+                response.getWriter().println("{\"msg\":\"用户登陆凭证已过期\"}");
                 response.setStatus(401);
                 return false;
             }
-        } catch (JWTDecodeException exception) {
-            response.getWriter().println("{\"success\":false,\"msg\":\"权限校验失败\"}");
+        } catch (Exception exception) {
+            response.getWriter().println("{\"msg\":\"权限校验失败\"}");
             response.setStatus(401);
             return false;
         }

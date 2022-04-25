@@ -16,4 +16,5 @@ public interface InfoMapper {
     List<Info> getInfoBySes(int sesID);
 
     List<Info> getInfoByEmail(String email);
+    List<Info> getAll();
 }

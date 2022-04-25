@@ -2,7 +2,6 @@ package com.reserve.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
@@ -18,13 +17,12 @@ public class TokenUtil {
     /**
      * 加密token.
      */
-    public String generateToken(int id, String email) {
+    public String generateToken(String account) {
         //这个是放到负载payLoad 里面,魔法值可以使用常量类进行封装.
         long EXPIRE = 60 * 60 * 1000;
         return JWT
                 .create()
-                .withClaim("id", id)
-                .withClaim("email", email)
+                .withClaim("account", account)
                 .withClaim("timeStamp", System.currentTimeMillis() + EXPIRE)
                 .sign(Algorithm.HMAC256(privateKey));
     }
@@ -32,15 +30,13 @@ public class TokenUtil {
     /**
      * 解析token.
      */
-    public Map<String, String> parseToken(String token) throws JWTDecodeException {
+    public Map<String, String> parseToken(String token) {
         HashMap<String, String> map = new HashMap<>();
         DecodedJWT decodedjwt = JWT.require(Algorithm.HMAC256(privateKey))
                 .build().verify(token);
-        Claim id = decodedjwt.getClaim("id");
-        Claim email = decodedjwt.getClaim("email");
+        Claim account = decodedjwt.getClaim("account");
         Claim timeStamp = decodedjwt.getClaim("timeStamp");
-        map.put("id", id.asInt() + "");
-        map.put("email", email.asString());
+        map.put("account", account.asString());
         map.put("timeStamp", timeStamp.asLong().toString());
         return map;
     }

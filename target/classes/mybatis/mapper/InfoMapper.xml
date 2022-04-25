@@ -31,4 +31,8 @@
           and user.id = user_info.user_id
           and info.id = user_info.info_id
     </select>
+    <select id="getAll" resultType="Info">
+        select *
+        from info
+    </select>
 </mapper>

@@ -19,5 +19,6 @@ public interface SesMapper {
     Ses getSes(int id);
 
     List<Ses> getSome(Date fromDate);
+    List<Ses> getAll();
 
 }

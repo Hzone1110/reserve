@@ -48,10 +48,14 @@ public class InfoController {
     }
 
     @GetMapping("/api/rsv")
-    public ResponseEntity<List<Info>> getInfo(@RequestBody Map<String, String> map) {
+    public ResponseEntity<List<Info>> getInfo(@RequestBody(required = false) Map<String, String> map) {
+        List<Info> infoList = new ArrayList<>();
+        if (map == null) {
+            infoList.addAll(infoMapper.getAll());
+            return new ResponseEntity<>(infoList, HttpStatus.OK);
+        }
         int sesID = Integer.parseInt(map.get("sesID"));
         String email = map.get("email");
-        List<Info> infoList = new ArrayList<>();
         if (sesID != 0) {
             infoList.addAll(infoMapper.getInfoBySes(sesID));
         }

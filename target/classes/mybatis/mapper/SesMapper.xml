@@ -31,4 +31,8 @@
         from session
         where date >= #{date}
     </select>
+    <select id="getAll" resultType="Ses">
+        select *
+        from session
+    </select>
 </mapper>

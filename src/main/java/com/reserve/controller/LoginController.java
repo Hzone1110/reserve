@@ -39,7 +39,9 @@ public class LoginController {
         Admin admin = adminMapper.queryAdminByAccount(account);
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
+                String token = tokenUtil.generateToken(admin.getAccount());
                 m.put("msg", "success");
+                m.put("token", token);
             } else {
                 m.put("msg", "密码错误");
             }
@@ -60,7 +62,7 @@ public class LoginController {
                 user = userMapper.queryUserByEmail(email);
             }
             m.put("msg", "success");
-            String token = tokenUtil.generateToken(user.getId(), user.getEmail());
+            String token = tokenUtil.generateToken(user.getEmail());
             emailService.sendSimpleMail(email, "登录链接", "localhost:8080/user/auth?token=" + token);
             return new ResponseEntity<>(m, HttpStatus.OK);
         }
@@ -73,6 +75,7 @@ public class LoginController {
         String token = tokenUtil.getToken(request);
         Map<String, String> m = tokenUtil.parseToken(token);
         m.remove("timeStamp");
+        m.put("msg", "success");
         return new ResponseEntity<>(m, HttpStatus.OK);
     }
 }
