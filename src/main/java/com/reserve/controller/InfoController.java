@@ -30,12 +30,16 @@ public class InfoController {
         int sesID = Integer.parseInt(map.get("sesID"));
         int position = Integer.parseInt(map.get("position"));
         int userID = Integer.parseInt(map.get("userID "));
+        String question = map.get("question");
         Map<String, String> m = new HashMap<>();
         String model = map.get("model");
         Info info = Info.builder().build();
         info.setPosition(position);
         info.setModel(model);
         info.setDate(Date.valueOf(LocalDate.now()));
+        info.setSesID(sesID);
+        info.setUserID(userID);
+        info.setQuestion(question);
         infoMapper.addInfo(info);
         m.put("msg", "success");
         return new ResponseEntity<>(m, HttpStatus.OK);

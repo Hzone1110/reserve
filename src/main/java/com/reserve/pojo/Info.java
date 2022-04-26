@@ -13,4 +13,7 @@ public class Info {
     private Date date;
     private String model;
     private Integer status;
+    private Integer sesID;
+    private Integer userID;
+    private String question;
 }

@@ -4,32 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.reserve.mapper.InfoMapper">
     <insert id="addInfo" parameterType="Info">
-        insert into info (position, date, model, status)
-        values (#{position}, #{date}, #{model}, #{status})
+        insert into info (position, date, model, status, ses_id, user_id, question)
+        values (#{position}, #{date}, #{model}, #{status}, #{sesID}, #{userID}, #{question})
     </insert>
     <delete id="deleteInfo" parameterType="int">
         delete
         from info
         where id = #{rsvID};
-        delete
-        from ses_info
-        where info_id = #{rsvID}
     </delete>
     <select id="getInfoBySes" resultType="Info" parameterType="int">
-        select id, position, date, model, status
-        from info,
-             ses_info
-        where id = ses_info.info_id
-          and session_id = #{rsvID}
+        select id, position, date, model, status, question
+        from info
+        where ses_id = #{rsvID}
     </select>
     <select id="getInfoByEmail" resultType="Info" parameterType="String">
-        select info.id, position, date, model, status
+        select info.id, position, date, model, status, question
         from info,
-             user_info,
              user
         where user.email = #{email}
-          and user.id = user_info.user_id
-          and info.id = user_info.info_id
+          and user.id = user_id
+
     </select>
     <select id="getAll" resultType="Info">
         select *
