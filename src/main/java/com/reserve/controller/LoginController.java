@@ -74,8 +74,10 @@ public class LoginController {
     public ResponseEntity<Map<String, String>> userAuth(HttpServletRequest request) {
         String token = tokenUtil.getToken(request);
         Map<String, String> m = tokenUtil.parseToken(token);
-        m.remove("timeStamp");
-        m.put("msg", "success");
+        User user = userMapper.queryUserByEmail(m.get("account"));
+        m.clear();
+        m.put("id", user.getId() + "");
+        m.put("email", user.getEmail());
         return new ResponseEntity<>(m, HttpStatus.OK);
     }
 }
