@@ -9,12 +9,13 @@ import java.util.List;
 @Mapper
 @Repository
 public interface InfoMapper {
-    int addInfo(Info info);
+    void addInfo(Info info);
 
-    int deleteInfo(int rsvID);
+    void deleteInfo(int rsvID);
 
     List<Info> getInfoBySes(int sesID);
 
     List<Info> getInfoByEmail(String email);
+
     List<Info> getAll();
 }

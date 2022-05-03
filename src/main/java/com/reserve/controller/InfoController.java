@@ -1,7 +1,6 @@
 package com.reserve.controller;
 
 import com.reserve.mapper.InfoMapper;
-import com.reserve.mapper.SesMapper;
 import com.reserve.pojo.Info;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +17,9 @@ import java.util.Map;
 @CrossOrigin
 public class InfoController {
     private final InfoMapper infoMapper;
-    private final SesMapper sesMapper;
 
-    public InfoController(InfoMapper infoMapper, SesMapper sesMapper) {
+    public InfoController(InfoMapper infoMapper) {
         this.infoMapper = infoMapper;
-        this.sesMapper = sesMapper;
     }
 
     @PostMapping("/api/rsv")

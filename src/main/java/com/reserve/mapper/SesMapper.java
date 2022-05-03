@@ -10,15 +10,14 @@ import java.util.List;
 @Mapper
 @Repository
 public interface SesMapper {
-    int addSes(Ses ses);
+    void addSes(Ses ses);
 
-    int deleteSes(int id);
-
-    int putSes(int id);
+    void deleteSes(int id);
 
     Ses getSes(int id);
 
     List<Ses> getSome(Date fromDate);
+
     List<Ses> getAll();
 
 }
