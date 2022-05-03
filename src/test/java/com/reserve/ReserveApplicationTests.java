@@ -29,7 +29,7 @@ class ReserveApplicationTests {
     SesMapper sesMapper;
 
     @Test
-    void contextLoads() throws SQLException {
+    void contextLoads() {
     }
 
 }

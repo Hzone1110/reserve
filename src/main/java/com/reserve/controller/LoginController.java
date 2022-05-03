@@ -63,7 +63,7 @@ public class LoginController {
             }
             m.put("msg", "success");
             String token = tokenUtil.generateToken(user.getEmail());
-            emailService.sendSimpleMail(email, "登录链接", "localhost:8080/user/auth?token=" + token);
+            emailService.sendHtmlMail(email, "预约维修登录链接", "<a href=\"http://localhost:8080/user/auth?token= + " + token + "\" target=\"_blank\">预约维修登录</a>");
             return new ResponseEntity<>(m, HttpStatus.OK);
         }
         m.put("msg", "邮箱错误");

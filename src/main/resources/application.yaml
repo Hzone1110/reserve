@@ -12,8 +12,10 @@ spring:
     host: smtp.qq.com #发送邮件服务器
     username: 592732293@qq.com #发送邮件的邮箱地址
     password: gmbwcjsgunvdbegc #客户端授权码，不是邮箱密码，这个在qq邮箱设置里面自动生成的
-    port: 465 #端口号465或587
-    default-encoding: utf-8
+    port: 587
+    #默认的邮件编码为UTF-8
+    default-encoding: UTF-8
+    #其他参数
     properties:
       mail:
         #配置SSL 加密工厂
@@ -22,8 +24,6 @@ spring:
             #本地测试，先放开ssl
             enable: false
             required: false
-          #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
-        debug: true
 server:
   port: 8081
 mybatis:
