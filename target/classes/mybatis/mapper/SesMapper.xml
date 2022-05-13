@@ -10,17 +10,22 @@
     <delete id="deleteSes" parameterType="int">
         delete
         from session
-        where id = #{id}
+        where id = #{sesID};
+    </delete>
+    <delete id="deleteInfo" parameterType="int">
+        delete
+        from info
+        where ses_id = #{sesID};
     </delete>
     <select id="getSes" resultType="Ses" parameterType="int">
         select *
         from session
-        where id = #{id}
+        where id = #{sesID}
     </select>
     <select id="getSome" resultType="Ses" parameterType="Date">
         select *
         from session
-        where date >= #{date}
+        where date >= #{fromDate}
     </select>
     <select id="getAll" resultType="Ses">
         select *
