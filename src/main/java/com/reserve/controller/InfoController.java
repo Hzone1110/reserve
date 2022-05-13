@@ -26,7 +26,7 @@ public class InfoController {
     public ResponseEntity<Map<String, String>> addInfo(@RequestBody Map<String, String> map) {
         int sesID = Integer.parseInt(map.get("sesID"));
         int position = Integer.parseInt(map.get("position"));
-        int userID = Integer.parseInt(map.get("userID "));
+        int userID = Integer.parseInt(map.get("userID"));
         String question = map.get("question");
         Map<String, String> m = new HashMap<>();
         String model = map.get("model");
@@ -52,16 +52,11 @@ public class InfoController {
     }
 
     @GetMapping("/api/rsv")
-    public ResponseEntity<List<Info>> getInfo(@RequestBody(required = false) Map<String, String> map) {
+    public ResponseEntity<List<Info>> getInfo(@RequestParam(value = "sesID", required = false) String sesID,
+                                              @RequestParam(value = "email", required = false) String email) {
         List<Info> infoList = new ArrayList<>();
-        if (map == null) {
-            infoList.addAll(infoMapper.getAll());
-            return new ResponseEntity<>(infoList, HttpStatus.OK);
-        }
-        int sesID = Integer.parseInt(map.get("sesID"));
-        String email = map.get("email");
-        if (sesID != 0) {
-            infoList.addAll(infoMapper.getInfoBySes(sesID));
+        if (sesID != null) {
+            infoList.addAll(infoMapper.getInfoBySes(Integer.parseInt(sesID)));
         }
         if (email != null) {
             infoList.addAll(infoMapper.getInfoByEmail(email));

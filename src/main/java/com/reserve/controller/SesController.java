@@ -18,6 +18,7 @@ import java.util.Map;
 public class SesController {
     private final SesMapper sesMapper;
 
+
     public SesController(SesMapper sesMapper) {
         this.sesMapper = sesMapper;
     }
@@ -39,28 +40,25 @@ public class SesController {
     @DeleteMapping("/api/ses")
     public ResponseEntity<Map<String, String>> delSes(@RequestBody Map<String, String> map) {
         Map<String, String> m = new HashMap<>();
+        sesMapper.deleteInfo(Integer.parseInt(map.get("sesID")));
         sesMapper.deleteSes(Integer.parseInt(map.get("sesID")));
         m.put("msg", "success");
         return new ResponseEntity<>(m, HttpStatus.OK);
     }
 
     @GetMapping("/api/ses")
-    public ResponseEntity<List<Ses>> getSes(@RequestBody(required = false) Map<String, String> map) {
+    public ResponseEntity<List<Ses>> getSes(@RequestParam(value = "sesID", required = false) String sesID,
+                                            @RequestParam(value = "fromTime", required = false) String fromTime) {
         List<Ses> sesList = new ArrayList<>();
-        if (map == null) {
+        if (sesID == null && fromTime == null) {
             sesList.addAll(sesMapper.getAll());
             return new ResponseEntity<>(sesList, HttpStatus.OK);
         }
-        String sesID = map.get("sesID");
-        String fromTime = map.get("fromTime");
         if (sesID != null) {
             sesList.add(sesMapper.getSes(Integer.parseInt(sesID)));
             return new ResponseEntity<>(sesList, HttpStatus.OK);
         }
-        if (fromTime != null) {
-            sesList.addAll(sesMapper.getSome(Date.valueOf(fromTime)));
-            return new ResponseEntity<>(sesList, HttpStatus.OK);
-        }
+        sesList.addAll(sesMapper.getSome(Date.valueOf(fromTime)));
         return new ResponseEntity<>(sesList, HttpStatus.OK);
     }
 }

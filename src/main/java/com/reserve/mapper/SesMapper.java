@@ -12,9 +12,11 @@ import java.util.List;
 public interface SesMapper {
     void addSes(Ses ses);
 
-    void deleteSes(int id);
+    void deleteSes(int sesID);
 
-    Ses getSes(int id);
+    void deleteInfo(int sesID);
+
+    Ses getSes(int sesID);
 
     List<Ses> getSome(Date fromDate);
 
