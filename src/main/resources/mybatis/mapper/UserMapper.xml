@@ -5,15 +5,15 @@
 <mapper namespace="com.reserve.mapper.UserMapper">
     <select id="queryUserList" resultType="User">
         select *
-        from user
+        from user;
     </select>
     <select id="queryUserByEmail" resultType="User">
         select *
         from user
-        where email = #{email}
+        where email = #{email};
     </select>
     <insert id="addUser" parameterType="String">
         insert into user (email)
-        values (#{email})
+        values (#{email});
     </insert>
 </mapper>

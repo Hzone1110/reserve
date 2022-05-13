@@ -5,7 +5,7 @@
 <mapper namespace="com.reserve.mapper.SesMapper">
     <insert id="addSes" parameterType="Ses">
         insert into session (date, startTime, endTime, position, `limit`, num)
-        values (#{date}, #{startTime}, #{endTime}, #{position}, #{limit}, 0)
+        values (#{date}, #{startTime}, #{endTime}, #{position}, #{limit}, 0);
     </insert>
     <delete id="deleteSes" parameterType="int">
         delete
@@ -20,15 +20,15 @@
     <select id="getSes" resultType="Ses" parameterType="int">
         select *
         from session
-        where id = #{sesID}
+        where id = #{sesID};
     </select>
     <select id="getSome" resultType="Ses" parameterType="Date">
         select *
         from session
-        where date >= #{fromDate}
+        where date >= #{fromDate};
     </select>
     <select id="getAll" resultType="Ses">
         select *
-        from session
+        from session;
     </select>
 </mapper>

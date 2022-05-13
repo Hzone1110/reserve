@@ -6,6 +6,6 @@
     <select id="queryAdminByAccount" resultType="Admin">
         select *
         from admin
-        where account = #{account}
+        where account = #{account};
     </select>
 </mapper>
