@@ -29,7 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 // 设置允许跨域请求的域名
-                .allowedOriginPatterns("*")
+                .allowedOriginPatterns("http://localhost:8080")
                 // 是否允许证书 不再默认开启
                 .allowCredentials(true)
                 // 设置允许的方法

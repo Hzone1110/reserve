@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 @RestController
-@CrossOrigin
 public class LoginController {
     private final TokenUtil tokenUtil;
     private final AdminMapper adminMapper;
