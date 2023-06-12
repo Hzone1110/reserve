@@ -1,32 +1,37 @@
 package com.reserve.controller;
 
-import com.reserve.service.EmailService;
 import com.reserve.mapper.AdminMapper;
 import com.reserve.mapper.UserMapper;
 import com.reserve.pojo.Admin;
 import com.reserve.pojo.User;
+import com.reserve.service.EmailService;
 import com.reserve.util.TokenUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 @RestController
+@Tag(name = "LoginController")
 public class LoginController {
-    private final TokenUtil tokenUtil;
     private final AdminMapper adminMapper;
     private final UserMapper userMapper;
     private final EmailService emailService;
 
-    public LoginController(AdminMapper adminMapper, UserMapper userMapper, EmailService emailService, TokenUtil tokenUtil) {
+    @Autowired
+    public LoginController(AdminMapper adminMapper, UserMapper userMapper, EmailService emailService) {
         this.adminMapper = adminMapper;
         this.userMapper = userMapper;
         this.emailService = emailService;
-        this.tokenUtil = tokenUtil;
     }
 
 
@@ -38,7 +43,7 @@ public class LoginController {
         Admin admin = adminMapper.queryAdminByAccount(account);
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
-                String token = tokenUtil.generateToken(admin.getAccount());
+                String token = TokenUtil.generateToken(admin.getAccount());
                 m.put("msg", "success");
                 m.put("token", token);
             } else {
@@ -61,7 +66,7 @@ public class LoginController {
                 user = userMapper.queryUserByEmail(email);
             }
             m.put("msg", "success");
-            String token = tokenUtil.generateToken(user.getEmail());
+            String token = TokenUtil.generateToken(user.getEmail());
             emailService.sendHtmlMail(email, "预约维修登录链接", "<a href=\"http://localhost:8080/user/auth?token= + " + token + "\" target=\"_blank\">预约维修登录</a>");
             return new ResponseEntity<>(m, HttpStatus.OK);
         }
@@ -71,11 +76,11 @@ public class LoginController {
 
     @GetMapping("/api/userAuth")
     public ResponseEntity<Map<String, String>> userAuth(HttpServletRequest request) {
-        String token = tokenUtil.getToken(request);
-        Map<String, String> m = tokenUtil.parseToken(token);
+        String token = TokenUtil.getToken(request);
+        Map<String, String> m = TokenUtil.parseToken(token);
         User user = userMapper.queryUserByEmail(m.get("account"));
         m.clear();
-        m.put("id", user.getId() + "");
+        m.put("id", String.valueOf(user.getId()));
         m.put("email", user.getEmail());
         return new ResponseEntity<>(m, HttpStatus.OK);
     }

@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<Map<String, String>> exceptionHandler(Exception e) {
         Map<String, String> map = new HashMap<>();
-        map.put("error", "数据库连接异常");
+        map.put("error", e.toString());
         return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

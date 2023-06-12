@@ -4,20 +4,20 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class TokenUtil {
-    private final String privateKey = "test";
+    private static final String privateKey = "test";
 
     /**
      * 加密token.
      */
-    public String generateToken(String account) {
+    public static String generateToken(String account) {
         //这个是放到负载payLoad 里面,魔法值可以使用常量类进行封装.
         long EXPIRE = 60 * 60 * 1000;
         return JWT
@@ -30,7 +30,7 @@ public class TokenUtil {
     /**
      * 解析token.
      */
-    public Map<String, String> parseToken(String token) {
+    public static Map<String, String> parseToken(String token) {
         HashMap<String, String> map = new HashMap<>();
         DecodedJWT decodedjwt = JWT.require(Algorithm.HMAC256(privateKey))
                 .build().verify(token);
@@ -44,7 +44,7 @@ public class TokenUtil {
     /**
      * @return 获取token
      */
-    public String getToken(HttpServletRequest request) {
+    public static String getToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 }

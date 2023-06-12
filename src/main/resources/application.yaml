@@ -29,3 +29,5 @@ server:
 mybatis:
   type-aliases-package: com.reserve.pojo
   mapper-locations: classpath:mybatis/mapper/*.xml
+springdoc:
+  packages-to-scan: com.reserve
